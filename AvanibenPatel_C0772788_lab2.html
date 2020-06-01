@@ -1,31 +1,102 @@
+<!DOCTYPE html>
 <html>
-	<font size="8" color="green">Final test lab</font>
-	<br><br>
-	
-	Number of rows: 
-	<input type="text" id="t1" />
-	<br><br>
-	
-	Number of cols: 
-	<input type="text" id="t2" />
-	<br><br>
-	
-	<button id="b1" onclick="generateTable()">Generate Table</button><br><br>
-	
-	<button id="b2" onclick="addColumn()">Add Column</button>
-	
-	<button id="b3" onclick="addRow()">Add Row</button>
-		
-	<script language="javascript">
-		
-		//Your code goes here
+<body>
+    <font id="title" size="8" color="green">Final test lab</font>
+    <br>
+    <br>
+   	<p id="rinput">Number of rows:
+		<input type="text" id="t1" />
+	</p>
+	<p id="cinput"> 	
+   		 Number of cols:
+		<input type="text" id="t2" />
+	</p>
+    <br>
+    <br>
 
-		//function to clear unwanted elements on button click
-		function clear() {
+    <button id="b1"  onclick="clear()">Generate Table</button>
+    <br>
+    <br>
+
+    <button id="b2" onclick="addColumn()">Add Column</button>
+
+    <button id="b3" onclick="addRow()">Add Row</button>
+
+    <script language="javascript">
+
+        //Your code goes here
+
+        //function for creating table
+        function createTable(rows, columns) {
+            var table = document.createElement('table');
+            table.style.border = "3px solid #218c74";
+            table.id = "myTable";
+            for (var x = 0; x < rows; x++) {
+                var tr = document.createElement('tr');
+				tr.style.border = "1px solid #218c74";
+
+                for (var y = 0; y < columns; y++) {
+                    var td = document.createElement('td');
+					td.style.border = "1px solid #218c74";
+                    td.innerHTML = 'Row' + '[' + (x+1) + ']' + ' Col' + '[' + (y+1) + ']';
+                    tr.appendChild(td);
+                }
+                table.appendChild(tr);
+            }
+            document.body.appendChild(table);
+        }
+
+        //function for hiding elements
+        function clear() {
             document.getElementById('t1').value = ''
             document.getElementById('t2').value = ''
             document.getElementById("b1").style.display = "none";
+			document.getElementById("title").style.display = "none";
+			document.getElementById("rinput").style.display = "none";
+			document.getElementById("cinput").style.display = "none";
         }
-	</script>
-	
+
+		//event for creating table on button click
+        var button = document.getElementById('b1').addEventListener('click', function () {
+            var rows = document.getElementById('t1').value;
+            var columns = document.getElementById('t2').value;
+            createTable(rows, columns);
+            clear();
+        })
+
+
+      	//function for adding row
+       function addRow() 
+	   {
+    		var tbl = document.getElementById("myTable"), 
+        	row = tbl.insertRow(tbl.rows.length),
+			i;
+    
+    		for (i = 0; i < tbl.rows[0].cells.length; i++) 
+			{
+        		addCellText(row.insertCell(i), "Row");
+    		}
+		}
+ 
+		//function for adding text in cells
+		function addCellText(cell, text) 
+		{
+        	txt = document.createTextNode(text); 
+        	cell.appendChild(txt);                                       
+        }
+
+	   //function for adding column
+       function addColumn() 
+	   {
+    		var tbl = document.getElementById("myTable"),
+			i;
+    
+    		for (i = 0; i < tbl.rows.length; i++) 
+			{
+        		addCellText(tbl.rows[i].insertCell(tbl.rows[i].cells.length), "Col");
+    		}
+		}
+       
+    </script>
+</body>
 </html>
